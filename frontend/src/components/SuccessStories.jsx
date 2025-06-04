@@ -12,7 +12,7 @@ const devs = [
     name: "Rahul Verma",
     role: "Senior Developer",
     company: "Facebook",
-   image: "/placeholder.jpg",
+    image: "/placeholder.jpg",
     testimonial: "The project-based learning gave me the edge I needed for Facebook interviews.",
   },
   {
@@ -26,16 +26,17 @@ const devs = [
     name: "Karan Mehta",
     role: "Backend Engineer",
     company: "Netflix",
-   image: "/placeholder.jpg",
+    image: "/placeholder.jpg",
     testimonial: "The deep-dive courses helped me excel and get placed at Netflix.",
   },
 ];
 
 const SuccessStories = () => {
   return (
-    <section className="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white py-16 px-6">
+    <section className="bg-gradient-to-r from-gray-800 via-gray-900 to-black
+ text-white py-16 px-6 mt-12">
       <div className="max-w-7xl mx-auto text-center">
-        <h2 className="text-4xl font-extrabold mb-4">
+        <h2 className="text-4xl font-bold mb-4">
           Success Stories
         </h2>
         <p className="text-yellow-300 mb-12 max-w-3xl mx-auto text-lg">
@@ -45,19 +46,18 @@ const SuccessStories = () => {
 
         <div className="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
           {devs.map(({ name, role, company, image, testimonial }, i) => (
-            <div
-              key={i}
-              className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-6 rounded-2xl shadow-2xl transform transition-transform hover:scale-105 cursor-pointer"
-            >
+            <div key={i}
+              className="bg-white/10 backdrop-blur-md border border-purple-200 p-6 rounded-2xl shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-2xl">
               <img
                 src={image}
                 alt={name}
-                className="w-24 h-24 rounded-full mx-auto border-4 border-white shadow-lg mb-4 object-cover"
-              />
-              <h3 className="text-xl font-semibold">{name}</h3>
+                className="w-24 h-24 rounded-full mx-auto border-4 border-white shadow-lg mb-4 object-cover"/>
+              <h3 className="text-xl font-semibold text-white">{name}</h3>
               <p className="text-yellow-300 font-medium">{role}</p>
-              <p className="mb-3">{company}</p>
-              <p className="text-gray-900 italic text-sm">{`"${testimonial}"`}</p>
+              <p className="text-purple-100 mb-3">{company}</p>
+              <p className="text-sm italic text-gray-200 leading-relaxed">
+                "{testimonial}"
+              </p>
             </div>
           ))}
         </div>

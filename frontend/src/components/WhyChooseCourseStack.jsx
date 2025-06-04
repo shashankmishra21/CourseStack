@@ -43,7 +43,7 @@ const features = [
 
 const WhyChooseCourseStack = () => {
   return (
-    <div className="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 py-20 px-4 text-white">
+    <div className="mt-8 bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 py-20 px-4 text-white">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-bold mb-12">
           <span>Why Choose Course</span><span className=" text-yellow-300">Stack</span><span>?</span></h2>

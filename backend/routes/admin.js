@@ -105,8 +105,8 @@ adminRouter.put("/course", adminMiddleware, async function (req, res) {
         title: title,
         description: description,
         image: {
-          public_id: image?.public_id,
-          url: image?.url,
+            public_id: image?.public_id,
+            url: image?.url,
         },
         price: price,
     })

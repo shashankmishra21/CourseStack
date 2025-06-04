@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom"
 import Navbar from "../components/Navbar";
-import { FaXTwitter } from "react-icons/fa6";
-import { FaLinkedin } from "react-icons/fa";
-import { FaGithub } from "react-icons/fa6";
+import Footer from "../components/Footer";
+
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
@@ -16,14 +15,7 @@ const Home = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const handleLogout = async () => {
-  //   try{
-  //     axios.get("");
 
-  //   } catch(error){
-
-
-  //   }
   //  }
 
 
@@ -50,61 +42,65 @@ const Home = () => {
 
   var settings = {
     dots: true,
-    infinite: false,
-    speed: 500,
+    infinite: true, // Changed to true for smoother looping
+    speed: 600,
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
     autoplay: true,
+    autoplaySpeed: 3000, // Smooth auto-play
+    cssEase: "ease-in-out", // For smooth transitions
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1280, // Large screens (like desktops)
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 2,
+          slidesToScroll: 1,
           infinite: true,
           dots: true,
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768, // Tablets
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToScroll: 1,
+          dots: true,
+          arrows: false,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 480, // Mobile phones
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
+          dots: true,
+          arrows: false,
         },
       },
     ],
   };
 
 
+
   return (
-    <div className='bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white '>
+    <div className='bg-gradient-to-br from-white via-violet-100 to-yellow-50 text-white '>
       <div className='min-h-screen text-white container mx-auto'>
 
         {/* Header */}
         <Navbar />
+        {/* Header */}
 
         {/* main section */}
-        <section>
-          <div className="flex flex-col justify-center items-center h-full px-6 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              <span>Build Skills. </span><span className=" text-yellow-300">Stack</span><span> Knowledge.</span>
+        <section className="py-0 px-6 bg-transparent">
+          <div className="flex flex-col justify-center items-center h-full text-center">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-gray-700">
+              <span>Build Skills. </span>
+              <span className="text-yellow-400">Stack</span>
+              <span> Knowledge.</span>
             </h1>
-            <p className="text-lg md:text-xl mb-10 text-gray-300 max-w-2xl">
-              {/* <span className="block text-xl md:text-2xl mb-2">
-                Welcome to
-              </span>
-              <span className="block text-3xl md:text-4xl font-extrabold text-white mb-4">
-                CourseStack
-              </span> */}
+
+            <p className="text-lg md:text-xl mb-10 text-gray-700 max-w-2xl">
               <span className="block">
                 Your personalized learning platform built by devs, for devs.
               </span>
@@ -112,48 +108,75 @@ const Home = () => {
                 Learn at your pace, grow your expertise, and make your mark in tech.
               </span>
             </p>
-            <div className="flex flex-col md:flex-row gap-4">
-              <button className="bg-yellow-300 hover:bg-white text-black px-6 py-3 rounded-2xl text-lg font-medium shadow-md transition">
+
+            <div className="flex flex-col md:flex-row gap-4 mb-8">
+              <Link
+                to={"/preview-course"}
+                className="bg-yellow-300 hover:bg-yellow-400 text-purple-900 px-6 py-3 rounded-2xl text-lg font-semibold shadow-md transition"
+              >
                 Browse Courses
-              </button>
-              <Link to={"/Signup"} className="border border-purple-400 text-purple-400 hover:bg-white px-6 py-3 rounded-2xl text-lg font-medium transition">
+              </Link>
+              <Link
+                to={"/Signup"}
+                className="border border-purple-500 text-purple-600 hover:bg-purple-100 px-6 py-3 rounded-2xl text-lg font-semibold transition"
+              >
                 Get Started
               </Link>
             </div>
           </div>
         </section>
 
+
         <section>
-          <div className=" flex items-center justify-center">
-            <div className="w-full pt-8 max-w-6xl px-4">
+
+          <div className="w-full py-8 px-4 bg-transparent">
+            <div className="max-w-7xl mx-auto">
+              <div className="mb-8">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-purple-900 text-center drop-shadow-md">
+                  Ready to imagine your career?
+                </h2>
+                <p className="text-center text-gray-800 mt-2 max-w-xl mx-auto">
+                  Discover courses crafted to boost your skills and transform your future.
+                </p>
+              </div>
               <Slider {...settings}>
                 {courses.map((course) => (
                   <div key={course._id} className="p-4">
-                    <div className="flex items-center relative flex-shrink-0 w-92 transition-transform duration-300 hover:scale-105">
-  <div className="bg-gradient-to-br from-indigo-900 via-gray-800 to-blue-900 rounded-2xl overflow-hidden border border-white/10 shadow-xl">
-    
-    <img 
-      className="h-32 w-full object-contain bg-black/20" 
-      src={course.image?.url || "/placeholder.jpg"} 
-      alt={course.title || "Course Image"} 
-    />
+                    <div className="flex justify-center">
+                      <div className="relative bg-white/40 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg w-80 transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
 
-    <div className="p-6 text-center">
-      <h2 className="text-xl font-bold text-white mb-2">
-        {course.title}
-      </h2>
-      <button className="mt-3 bg-yellow-300 text-black font-semibold py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
-        Enroll Now
-      </button>
-    </div>
-  </div>
-</div>
+                        {/* Image */}
+                        <img
+                          className="h-48 w-full object-cover rounded-t-2xl border-b border-purple-200"
+                          src={course.image?.url || "/placeholder.jpg"}
+                          alt={course.title || "Course Image"}
+                        />
 
+                        {/* Content */}
+                        <div className="p-5 text-center space-y-3">
+                          <h2 className="text-xl font-bold text-purple-800 leading-snug">{course.title}</h2>
+                          <p className="text-sm text-gray-700 line-clamp-3">{course.description}</p>
+                          <div className="text-yellow-600 font-bold text-lg">₹{course.price}</div>
+
+                          <button className="mt-2 bg-yellow-300 text-purple-900 font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
+                            Enroll Now
+                          </button>
+                        </div>
+
+                      </div>
+                    </div>
                   </div>
                 ))}
               </Slider>
             </div>
           </div>
+
+
+
+
+
+
+
         </section>
         <section>
           <WhyChooseCourseStack />
@@ -161,13 +184,16 @@ const Home = () => {
 
 
         <section>
-          <SuccessStories/>
+          <SuccessStories />
         </section>
 
+        <hr />
 
         {/* footer */}
 
-        <hr />
+        <Footer />
+        {/* 
+        
         <footer className="mt-5">
 
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -206,7 +232,7 @@ const Home = () => {
           <div className="text-center mt-4 p-4 text-md text-gray-400 ">
             © {new Date().getFullYear()} CourseStack. All rights reserved. Developed by Shashank
           </div>
-        </footer>
+        </footer> */}
       </div>
     </div>
   )

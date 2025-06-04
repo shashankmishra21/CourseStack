@@ -28,28 +28,6 @@ userRouter.post("/signup", async function (req, res) {
 
 });
 
-// userRouter.post("/signin", async function (req, res) {
-//     const { email, password } = req.body;
-    
-//     const user = await userModel.findOne({
-//         email: email,
-//         password: password
-//     });
-//     if (user) {
-//         const token = jwt.sign({
-//             id: user._id
-//         }, JWT_USER_PASSWORD);
-
-//         res.json({
-//             token: token
-//         })
-//     }
-//     else {
-//         res.status(403).json({ message: "Invalid email or password" });
-//     }
-// })
-
-
 userRouter.post("/signin", async function (req, res) {
   const { email, password } = req.body;
 
