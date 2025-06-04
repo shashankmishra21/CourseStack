@@ -5,7 +5,7 @@ const Navbar = () => {
         <header className='flex justify-between items-center p-6'>
             <div className="flex items-center gap-2">
                 <img src='/logo_cs.png' alt='' className="w-10 h-10 rounded-full" />
-                <h1 className="text-2xl text-white font-bold">CourseStack</h1>
+                <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
             </div>
 
             <div className="flex gap-4">

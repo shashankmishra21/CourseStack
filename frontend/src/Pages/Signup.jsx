@@ -1,4 +1,4 @@
-import { Link , useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import axios from "axios";
 import { toast } from 'react-toastify';
@@ -20,28 +20,29 @@ function Signup() {
     e.preventDefault();
 
     try {
-    const response = await axios.post("http://localhost:3000/api/user/signup", {
-      firstName,
-      lastName,
-      email,
-      password,
-    }, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await axios.post("http://localhost:3000/api/user/signup", {
+        firstName,
+        lastName,
+        email,
+        password,
+      }, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    console.log("Signup successful:", response.data);
-    toast.success(response.data.message);  // ✅ Show success alert
-    navigate("/Signin");           // ✅ Redirect to signin page
-  } catch (error) {
-    if (error.response) {
-      console.error("Signup error:", error.response.data); // ✅ Log for debugging
-      toast.error(error.response.data.error || "Signup failed");  // ✅ Alert failure message
-      // setErrorMessage(error.response.data.error);
+      console.log("Signup successful:", response.data);
+      toast.success(response.data.message);  // ✅ Show success alert
+      navigate("/Signin");           // ✅ Redirect to signin page
+    } catch (error) {
+      if (error.response) {
+        console.error("Signup error:", error.response.data); // ✅ Log for debugging
+        toast.error(error.response.data.error || "Signup failed");  // ✅ Alert failure message
+        // setErrorMessage(error.response.data.error);
+      }
     }
-  }  };
+  };
 
 
   return (
@@ -54,7 +55,7 @@ function Signup() {
         <header className='flex justify-between items-center p-6'>
           <div className="flex items-center gap-2">
             <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full" />
-            <h1 className="text-2xl font-bold">CourseStack</h1>
+            <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
           </div>
 
           <div className="flex gap-4">
@@ -64,7 +65,7 @@ function Signup() {
             >
               Signin
             </Link>
-            
+
           </div>
         </header>
 
@@ -133,10 +134,10 @@ function Signup() {
               </div>
 
               {errorMessage && (
-              <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
-                {errorMessage}
-              </div>
-            )}
+                <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
+                  {errorMessage}
+                </div>
+              )}
 
               <button
                 type="submit"

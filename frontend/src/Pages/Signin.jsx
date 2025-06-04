@@ -10,7 +10,7 @@ function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
- 
+
 
   const navigate = useNavigate();
 
@@ -18,30 +18,30 @@ function Signin() {
     e.preventDefault();
 
     try {
-    const response = await axios.post("http://localhost:3000/api/user/Signin", {
-      email,
-      password,
-    }, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await axios.post("http://localhost:3000/api/user/Signin", {
+        email,
+        password,
+      }, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    //  Show alert message only
-    toast.success(response.data.message);
-    //  Log token (not shown to user)
-    console.log("JWT Token:", response.data.token);
-    navigate("/")
+      //  Show alert message only
+      toast.success(response.data.message);
+      //  Log token (not shown to user)
+      console.log("JWT Token:", response.data.token);
+      navigate("/")
 
-  } catch (error) {
-    if (error.response && error.response.data.message) {
-      toast.error(error.response.data.errors || "Login failed!!!"); // show failed message
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        toast.error(error.response.data.errors || "Login failed!!!"); // show failed message
 
-    } else {
-      toast.error("Something went wrong. Try again later.");
+      } else {
+        toast.error("Something went wrong. Try again later.");
+      }
     }
-  }
   };
 
 
@@ -54,11 +54,11 @@ function Signin() {
         <header className='flex justify-between items-center p-6'>
           <div className="flex items-center gap-2">
             <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full" />
-            <h1 className="text-2xl font-bold">CourseStack</h1>
+            <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
           </div>
 
           <div className="flex gap-4">
-            
+
             <Link
               to={"/Signup"}
               className="bg-transparent text-white font-bold py-2 px-4 border border-white rounded hover:bg-white hover:text-purple-700 transition duration-200"
@@ -76,7 +76,7 @@ function Signin() {
               <h5 className='text-base font-normal text-center text-white'>Access your dashboard, courses, and more.</h5>
               {/* Welcome to <span className="text-white">Course</span><span className="text-yellow-300">Stack</span> */}
             </h2>
-      
+
             <form onSubmit={handleSubmit}>
 
               {/* Email */}
@@ -105,11 +105,11 @@ function Signin() {
                   autoComplete="new-password"
                 />
               </div>
-{errorMessage && (
-              <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
-                {errorMessage}
-              </div>
-            )}
+              {errorMessage && (
+                <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
+                  {errorMessage}
+                </div>
+              )}
               <button
                 type="submit"
                 className="w-full bg-yellow-400 text-purple-800 font-bold py-3 rounded-md hover:bg-yellow-300 transition"

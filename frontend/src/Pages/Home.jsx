@@ -8,11 +8,13 @@ import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import WhyChooseCourseStack from "../components/WhyChooseCourseStack";
+import SuccessStories from "../components/successStories";
 
 
 const Home = () => {
 
-  const[ isLoggedIn , setIsLoggedIn ] =useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // const handleLogout = async () => {
   //   try{
@@ -20,7 +22,7 @@ const Home = () => {
 
   //   } catch(error){
 
-    
+
   //   }
   //  }
 
@@ -88,13 +90,13 @@ const Home = () => {
       <div className='min-h-screen text-white container mx-auto'>
 
         {/* Header */}
-        <Navbar/>
-    
+        <Navbar />
+
         {/* main section */}
         <section>
           <div className="flex flex-col justify-center items-center h-full px-6 text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-              Build Skills. Stack Knowledge.
+              <span>Build Skills. </span><span className=" text-yellow-300">Stack</span><span> Knowledge.</span>
             </h1>
             <p className="text-lg md:text-xl mb-10 text-gray-300 max-w-2xl">
               {/* <span className="block text-xl md:text-2xl mb-2">
@@ -122,37 +124,51 @@ const Home = () => {
         </section>
 
         <section>
-          <div className="min-h-screen flex items-center justify-center">
-  <div className="w-full max-w-6xl px-4">
-          <Slider {...settings}>
-            {courses.map((course) => (
-              <div key={course._id} className="p-4">
-                <div className="flex items-center relative  flex-shrink-0 w-92 transition-transform duration-300 hover:scale-05">
-                  <div className="bg-gray-900 rounded-lg overflow-hidden" >
-                    <img className="h-32 w-full object-contain"
-                      src={course.image?.url || "/placeholder.jpg"}
-                      alt={course.title || "Course Image"}/>
+          <div className=" flex items-center justify-center">
+            <div className="w-full pt-8 max-w-6xl px-4">
+              <Slider {...settings}>
+                {courses.map((course) => (
+                  <div key={course._id} className="p-4">
+                    <div className="flex items-center relative flex-shrink-0 w-92 transition-transform duration-300 hover:scale-105">
+  <div className="bg-gradient-to-br from-indigo-900 via-gray-800 to-blue-900 rounded-2xl overflow-hidden border border-white/10 shadow-xl">
+    
+    <img 
+      className="h-32 w-full object-contain bg-black/20" 
+      src={course.image?.url || "/placeholder.jpg"} 
+      alt={course.title || "Course Image"} 
+    />
 
-                    <div className="p-6 text-center">
-                      <h2 className="text-xl font-bold text-white"  >
-                        {course.title}
-                      </h2>
-                      <button className="mt-4 bg-yellow-300 text-black py-2 px-4 rounded-full hover:bg-purple-400 duration-300">Enroll Now</button>
-                    </div>
+    <div className="p-6 text-center">
+      <h2 className="text-xl font-bold text-white mb-2">
+        {course.title}
+      </h2>
+      <button className="mt-3 bg-yellow-300 text-black font-semibold py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
+        Enroll Now
+      </button>
+    </div>
+  </div>
+</div>
+
                   </div>
-                </div>
-              </div>
-            ))}
-          </Slider>
-</div>
-</div>
+                ))}
+              </Slider>
+            </div>
+          </div>
         </section>
-        {/* <section>Section 3</section> */}
+        <section>
+          <WhyChooseCourseStack />
+        </section>
+
+
+        <section>
+          <SuccessStories/>
+        </section>
+
 
         {/* footer */}
 
         <hr />
-        <footer className="my-8">
+        <footer className="mt-5">
 
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div className="flex flex-col items-center md:items-center">
@@ -161,7 +177,7 @@ const Home = () => {
                 <img src='/logo_cs.png' alt='' className="w-10 h-10 rounded-full" />
                 <h1 className="text-2xl text-white font-bold">CourseStack</h1>
               </div>
-              <div className="mt-3 ml-2 md:ml-16">
+              <div className="mt-3 ml-2 md:ml-12 text-center">
                 <p className="mb-2">Follow Us</p>
                 <div className="flex space-x-4">
                   <a href=""><FaXTwitter className="text-2xl hover:text-blue-400 duration-300" /></a>
@@ -170,7 +186,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className="items-center flex flex-col">
+            <div className="items-center text-center flex flex-col">
               <h3 className="text-lg font-semibold mb-2 mt-3">Stack Links</h3>
               <ul className="space-y-2 text-gray-400">
                 <li className="hover:text-white cursor-pointer duration-300">report</li>
@@ -178,7 +194,7 @@ const Home = () => {
                 <li className="hover:text-white cursor-pointer duration-300">ratings</li>
               </ul>
             </div>
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col text-center items-center">
               <h3 className="text-lg font-semibold mb-2 mt-3">Stack Legals</h3>
               <ul className="space-y-2 text-gray-400">
                 <li className="hover:text-white cursor-pointer duration-300">Terms & Condition</li>
@@ -187,7 +203,7 @@ const Home = () => {
               </ul>
             </div>
           </div>
-          <div className="text-center mt-8 text-md text-gray-400 ">
+          <div className="text-center mt-4 p-4 text-md text-gray-400 ">
             © {new Date().getFullYear()} CourseStack. All rights reserved. Developed by Shashank
           </div>
         </footer>
