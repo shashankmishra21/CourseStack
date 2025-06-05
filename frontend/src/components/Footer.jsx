@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className=" bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white rounded-t-2xl shadow-inner mt-20">
+    <footer className=" bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white rounded-t-2xl shadow-inner mt-10">
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 py-12 px-8 max-w-7xl mx-auto">
         {/* Logo and Socials */}

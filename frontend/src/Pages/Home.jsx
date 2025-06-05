@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
@@ -9,15 +8,24 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import WhyChooseCourseStack from "../components/WhyChooseCourseStack";
 import SuccessStories from "../components/successStories";
-
+import Dashboard from "./Dashboard";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Home = () => {
 
+  const navigate = useNavigate();
+
+  const handleGoToDashboard = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/Dashboard');
+    } else {
+      toast.warning("Please sign in first to access your Dashboard!");
+    }
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-
-  //  }
-
 
   const [courses, setCourses] = useState([]);
 
@@ -116,12 +124,12 @@ const Home = () => {
               >
                 Browse Courses
               </Link>
-              <Link
-                to={"/Signup"}
-                className="border border-purple-500 text-purple-600 hover:bg-purple-100 px-6 py-3 rounded-2xl text-lg font-semibold transition"
+              <button
+                onClick={handleGoToDashboard}
+                className="bg-purple-700 text-white px-6 py-3 rounded-md hover:bg-purple-800 transition"
               >
-                Get Started
-              </Link>
+                My Dashboard
+              </button>
             </div>
           </div>
         </section>
@@ -182,57 +190,14 @@ const Home = () => {
           <WhyChooseCourseStack />
         </section>
 
-
         <section>
           <SuccessStories />
         </section>
 
-        <hr />
-
         {/* footer */}
 
         <Footer />
-        {/* 
-        
-        <footer className="mt-5">
 
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="flex flex-col items-center md:items-center">
-
-              <div className="flex items-center gap-4">
-                <img src='/logo_cs.png' alt='' className="w-10 h-10 rounded-full" />
-                <h1 className="text-2xl text-white font-bold">CourseStack</h1>
-              </div>
-              <div className="mt-3 ml-2 md:ml-12 text-center">
-                <p className="mb-2">Follow Us</p>
-                <div className="flex space-x-4">
-                  <a href=""><FaXTwitter className="text-2xl hover:text-blue-400 duration-300" /></a>
-                  <a href=""><FaLinkedin className="text-2xl hover:text-blue-800 duration-300" /></a>
-                  <a href=""><FaGithub className="text-2xl hover:text-green-500 duration-300" /></a>
-                </div>
-              </div>
-            </div>
-            <div className="items-center text-center flex flex-col">
-              <h3 className="text-lg font-semibold mb-2 mt-3">Stack Links</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li className="hover:text-white cursor-pointer duration-300">report</li>
-                <li className="hover:text-white cursor-pointer duration-300">feedback</li>
-                <li className="hover:text-white cursor-pointer duration-300">ratings</li>
-              </ul>
-            </div>
-            <div className="flex flex-col text-center items-center">
-              <h3 className="text-lg font-semibold mb-2 mt-3">Stack Legals</h3>
-              <ul className="space-y-2 text-gray-400">
-                <li className="hover:text-white cursor-pointer duration-300">Terms & Condition</li>
-                <li className="hover:text-white cursor-pointer duration-300">Privacy Policy</li>
-                <li className="hover:text-white cursor-pointer duration-300">Refunds and Cancellation</li>
-              </ul>
-            </div>
-          </div>
-          <div className="text-center mt-4 p-4 text-md text-gray-400 ">
-            © {new Date().getFullYear()} CourseStack. All rights reserved. Developed by Shashank
-          </div>
-        </footer> */}
       </div>
     </div>
   )

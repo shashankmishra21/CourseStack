@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Navbar from "../components/Navbar"
+import Navbar from "../components/Navbar";
+import PurchaseCourse from './PurchaseCourse';
+import { toast } from 'react-toastify';             // import toast
+import 'react-toastify/dist/ReactToastify.css';    // import styles
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [purchasingCourseId, setPurchasingCourseId] = useState(null); // to track purchase state
 
   const fetchCourses = async () => {
     try {
@@ -12,6 +16,7 @@ const Courses = () => {
       setCourses(res.data.courses);
     } catch (error) {
       console.error('Error fetching courses:', error);
+      toast.error("Failed to load courses.");  // show error if fetch fails
     } finally {
       setLoading(false);
     }
@@ -21,10 +26,26 @@ const Courses = () => {
     fetchCourses();
   }, []);
 
+  const handleEnroll = async (courseId) => {
+    setPurchasingCourseId(courseId);
+    try {
+      const result = await PurchaseCourse(courseId);
+      if (result && result.message) {
+        toast.success(result.message);  // show success toast from backend message
+      } else {
+        toast.error("Purchase failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setPurchasingCourseId(null);
+    }
+  };
+
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-violet-300 via-sky-200 to-white">
-        <div className="text-purple-700 text-xl animate-pulse font-semibold">
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900">
+        <div className="text-white text-xl animate-pulse font-semibold">
           Loading courses...
         </div>
       </div>
@@ -32,11 +53,10 @@ const Courses = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-violet-400 via-sky-100 to-white px-4 py-0">
-     
+    <div className="min-h-screen  bg-gradient-to-br from-gray-100 via-white to-gray-200 px-4 py-0">
       <Navbar/>
-      <h2 className="text-4xl font-extrabold text-center text-purple-700 mb-14">
-        Explore Our Courses
+      <h2 className="text-4xl font-bold text-center text-gray-700 mb-14">
+        Our Courses
       </h2>
 
       {courses.length === 0 ? (
@@ -61,8 +81,12 @@ const Courses = () => {
                 <p className="text-gray-600 text-sm line-clamp-3">{course.description}</p>
                 <div className="mt-4 flex items-center justify-between">
                   <span className="text-yellow-600 font-bold text-lg">₹{course.price}</span>
-                  <button className="bg-yellow-300 text-yellow-900 font-medium py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow">
-                    Enroll
+                  <button
+                    onClick={() => handleEnroll(course._id)}
+                    className="bg-yellow-300 text-yellow-900 font-medium py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow"
+                    disabled={purchasingCourseId === course._id}  // disable while purchasing
+                  >
+                    {purchasingCourseId === course._id ? "Enrolling..." : "Enroll"}
                   </button>
                 </div>
               </div>

@@ -4,49 +4,51 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Signin() {
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('');
-
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/api/user/Signin", {
-        email,
-        password,
-      }, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/user/signin",
+        { email, password },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      //  Show alert message only
-      toast.success(response.data.message);
-      //  Log token (not shown to user)
-      console.log("JWT Token:", response.data.token);
-      navigate("/")
+      const token = response.data.token;
 
+      if (token) {
+        localStorage.setItem("token", token);  // <-- Store JWT token here!
+        console.log("JWT Token stored:", token);
+
+        toast.success(response.data.message || "Signed in successfully");
+        navigate("/dashboard"); // Redirect user after login (e.g. homepage or dashboard)
+      } else {
+        toast.error("Token not received. Please try again.");
+      }
     } catch (error) {
-      if (error.response && error.response.data.message) {
-        toast.error(error.response.data.errors || "Login failed!!!"); // show failed message
-
+      console.error("Signin error:", error);
+      if (error.response?.data?.message) {
+        toast.error(error.response.data.message);
+        setErrorMessage(error.response.data.message);
       } else {
         toast.error("Something went wrong. Try again later.");
+        setErrorMessage("Something went wrong. Try again later.");
       }
     }
   };
 
-
   return (
-
     <div className='bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white'>
       <div className='min-h-screen container mx-auto'>
 
@@ -54,13 +56,15 @@ function Signin() {
         <header className='flex justify-between items-center p-6'>
           <div className="flex items-center gap-2">
             <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full" />
-            <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
+            <h1>
+              <span className="text-2xl text-white font-bold">Course</span>
+              <span className="text-2xl text-yellow-400 font-bold">Stack</span>
+            </h1>
           </div>
 
           <div className="flex gap-4">
-
             <Link
-              to={"/Signup"}
+              to={"/signup"}
               className="bg-transparent text-white font-bold py-2 px-4 border border-white rounded hover:bg-white hover:text-purple-700 transition duration-200"
             >
               Sign Up
@@ -74,11 +78,9 @@ function Signin() {
             <h2 className="text-3xl font-bold mb-4 text-center text-white">
               Sign in to your account
               <h5 className='text-base font-normal text-center text-white'>Access your dashboard, courses, and more.</h5>
-              {/* Welcome to <span className="text-white">Course</span><span className="text-yellow-300">Stack</span> */}
             </h2>
 
             <form onSubmit={handleSubmit}>
-
               {/* Email */}
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-300 mb-1">Email</label>
@@ -89,6 +91,7 @@ function Signin() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full p-3 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   placeholder="you@example.com"
+                  required
                 />
               </div>
 
@@ -103,13 +106,17 @@ function Signin() {
                   className="w-full p-3 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-yellow-400"
                   placeholder="********"
                   autoComplete="new-password"
+                  required
                 />
               </div>
+
+              {/* Error message display */}
               {errorMessage && (
-                <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
+                <div className="mb-4 font-semibold text-red-700 text-center">
                   {errorMessage}
                 </div>
               )}
+
               <button
                 type="submit"
                 className="w-full bg-yellow-400 text-purple-800 font-bold py-3 rounded-md hover:bg-yellow-300 transition"
@@ -117,7 +124,6 @@ function Signin() {
                 Sign In
               </button>
             </form>
-
           </div>
         </div>
 
