@@ -14,8 +14,8 @@ const cors = require("cors");
 app.use(express.json());
 
 app.use(fileUpload({
-    useTempFiles : true,
-    tempFileDir : '/tmp/'
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
 }));
 
 // app.use(cors({
@@ -27,16 +27,16 @@ app.use(fileUpload({
 
 
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+    origin: 'http://localhost:5173',
+    credentials: true
 }));
 
 // Manually set CORS headers for preflight requests
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, token");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
+    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, token");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    next();
 });
 
 
@@ -46,12 +46,12 @@ app.use("/api/admin", adminRouter);
 app.use("/api/course", courseRouter);
 
 
-    // Configuration
-    cloudinary.config({ 
-        cloud_name: process.env.cloud_name,
-        api_key:  process.env.api_key,
-        api_secret:  process.env.api_secret
-    });
+// Configuration
+cloudinary.config({
+    cloud_name: process.env.cloud_name,
+    api_key: process.env.api_key,
+    api_secret: process.env.api_secret
+});
 
 
 async function main() {

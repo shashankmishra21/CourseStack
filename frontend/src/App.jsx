@@ -9,6 +9,11 @@ import PurchaseCourse from "./Pages/PurchaseCourse";
 import Purchases from "./Pages/Purchases";
 import Dashboard from './Pages/Dashboard';
 import "react-toastify/dist/ReactToastify.css";
+import CreatorSignup from './Pages/CreatorSignup';
+import CreatorSignin from './Pages/CreatorSignin';
+import CreateCourse from './Pages/CreateCourse';
+import UpdateCourse from './Pages/UpdateCourse';
+import CreatorDashboard from './Pages/CreatorDashboard';
 
 function App() {
 
@@ -24,6 +29,12 @@ function App() {
         <Route path="/purchases" element={<Purchases />} />
 
         <Route path="/dashboard" element={<Dashboard />} />
+        {/* Creator */}
+        <Route path="/creator/signin" element={<CreatorSignin />} />
+        <Route path="/creator/signup" element={<CreatorSignup />} />
+        <Route path="/create-course" element={<CreateCourse />} />
+        <Route path="/update-course" element={< UpdateCourse />} />
+        <Route path="/creator-dashboard" element={<CreatorDashboard />} />
 
       </Routes>
       <ToastContainer position="top-center" autoClose={3000} />

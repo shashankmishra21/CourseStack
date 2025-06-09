@@ -1,15 +1,32 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [learnerOpen, setLearnerOpen] = useState(false);
+  const [creatorOpen, setCreatorOpen] = useState(false);
+  const learnerRef = useRef();
+  const creatorRef = useRef();
 
-  // Check if user is logged in
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token); // true if token exists
+    setIsLoggedIn(!!token);
+  }, []);
+
+  // Close dropdowns on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (learnerRef.current && !learnerRef.current.contains(e.target)) {
+        setLearnerOpen(false);
+      }
+      if (creatorRef.current && !creatorRef.current.contains(e.target)) {
+        setCreatorOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleLogout = () => {
@@ -30,7 +47,7 @@ const Navbar = () => {
       </div>
 
       {/* Auth Buttons */}
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
@@ -40,18 +57,67 @@ const Navbar = () => {
           </button>
         ) : (
           <>
-            <Link
-              to="/Signin"
-              className="px-5 py-2 rounded-md border border-purple-300 text-purple-700 font-medium hover:bg-purple-100 transition duration-200"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/Signup"
-              className="px-5 py-2 rounded-md bg-yellow-300 text-purple-900 font-semibold hover:bg-yellow-400 transition duration-200"
-            >
-              Sign Up
-            </Link>
+            {/* Learner Dropdown */}
+            <div className="relative" ref={learnerRef}>
+              <button
+                onClick={() => {
+                  setLearnerOpen(!learnerOpen);
+                  setCreatorOpen(false);
+                }}
+                className="px-5 py-2 rounded-md bg-yellow-300 text-purple-900 font-semibold hover:bg-yellow-400 transition duration-200"
+              >
+                Learner
+              </button>
+              {learnerOpen && (
+                <div className="absolute top-12 right-0 w-32 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+                  <Link
+                    to="/Signin"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setLearnerOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/Signup"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setLearnerOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            {/* Creator Dropdown */}
+            <div className="relative" ref={creatorRef}>
+              <button
+                onClick={() => {
+                  setCreatorOpen(!creatorOpen);
+                  setLearnerOpen(false);
+                }}
+                className="px-5 py-2 rounded-md bg-yellow-300 text-purple-900 font-semibold hover:bg-yellow-400 transition duration-200"
+              >
+                Creator
+              </button>
+              {creatorOpen && (
+                <div className="absolute top-12 right-0 w-32 bg-white border border-gray-200 rounded-md shadow-lg z-20">
+                  <Link
+                    to="/Creator/signin"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setCreatorOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    to="/creator/signup"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    onClick={() => setCreatorOpen(false)}
+                  >
+                    Sign Up
+                  </Link>
+                </div>
+              )}
+            </div>
           </>
         )}
       </div>
