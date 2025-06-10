@@ -30,7 +30,7 @@ function App() {
         <Route path="/buy-course" element={<PurchaseCourse />} />
         {/* <Route path="/purchases" element={<Purchases />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
-{/* creator */}
+        {/* creator */}
         <Route path="/creator/signin" element={<CreatorSignin />} />
         <Route path="/creator/signup" element={<CreatorSignup />} />
         <Route path="/create-course" element={<CreateCourse />} />
