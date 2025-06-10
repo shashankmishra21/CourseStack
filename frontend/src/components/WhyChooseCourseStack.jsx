@@ -1,4 +1,5 @@
 import React from "react";
+import Slider from "react-slick";
 import {
   BookOpen,
   Briefcase,
@@ -41,27 +42,50 @@ const features = [
   },
 ];
 
+const sliderSettings = {
+  dots: true,
+  infinite: true,
+  speed: 600,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  arrows: false,
+  autoplay: true,
+  autoplaySpeed: 3000,
+};
+
 const WhyChooseCourseStack = () => {
   return (
     <div className="mt-8 bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 py-20 px-4 text-white">
-      <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-bold mb-12">
-          <span>Why Choose Course</span><span className=" text-yellow-300">Stack</span><span>?</span></h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto text-center">
+        <h2 className="text-3xl sm:text-4xl font-bold mb-12">
+          Why Choose <span className="text-yellow-300">CourseStack</span>?
+        </h2>
+
+        {/* Slider for small screens */}
+        <div className="block md:hidden">
+          <Slider {...sliderSettings}>
+            {features.map((feature, index) => (
+              <div key={index} className="px-4">
+                <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-6 rounded-2xl shadow-lg border-2 border-white min-h-[280px] flex flex-col items-center justify-center">
+                  {feature.icon}
+                  <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
+                  <p className="mt-2 text-sm text-white/90">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        </div>
+
+        {/* Grid for medium and large screens */}
+        <div className="hidden md:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="flip-card w-full h-64 perspective"
+              className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-6 rounded-2xl shadow-lg border-2 border-white min-h-[250px] flex flex-col items-center justify-center"
             >
-              <div className="flip-card-inner w-full h-full transition-transform duration-700 ease-in-out">
-                <div className="flip-card-front bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-6 rounded-2xl shadow-2xl border-2 border-white flex flex-col justify-center items-center">
-                  {feature.icon}
-                  <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
-                </div>
-                <div className="flip-card-back bg-yellow-300 text-black p-6 rounded-2xl shadow-2xl border-2 border-white flex items-center justify-center">
-                  <p className="text-lg font-medium">{feature.description}</p>
-                </div>
-              </div>
+              {feature.icon}
+              <h3 className="text-xl font-semibold mt-4">{feature.title}</h3>
+              <p className="mt-2 text-sm text-white/90 text-center">{feature.description}</p>
             </div>
           ))}
         </div>

@@ -16,14 +16,20 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleGoToDashboard = () => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/Dashboard');
-    } else {
-      toast.warning("Please sign in first to access your Dashboard!");
-    }
-  };
+const handleGoToDashboard = () => {
+  const learnerToken = localStorage.getItem('token');
+  const creatorToken = localStorage.getItem('creatorToken');
+
+  if (learnerToken) {
+    navigate('/Dashboard');
+  } else if (creatorToken) {
+    navigate('/creator-dashboard');
+  } else {
+    toast.warning("Please sign in first to access your Dashboard!");
+  }
+};
+
+
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -102,7 +108,7 @@ const Home = () => {
         {/* main section */}
         <section className="py-0 px-6 bg-transparent">
           <div className="flex flex-col justify-center items-center h-full text-center">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6 text-gray-700">
+            <h1 className="text-4xl md:text-6xl font-bold leading-tight mt-6 mb-6 text-gray-700">
               <span>Build Skills. </span>
               <span className="text-yellow-400">Stack</span>
               <span> Knowledge.</span>
@@ -126,7 +132,7 @@ const Home = () => {
               </Link>
               <button
                 onClick={handleGoToDashboard}
-                className="bg-purple-700 text-white px-6 py-3 rounded-md hover:bg-purple-800 transition"
+                className="bg-purple-700 text-white px-6 py-3 rounded-2xl text-lg font-semibold shadow-md transition hover:bg-purple-800 "
               >
                 My Dashboard
               </button>
@@ -148,34 +154,39 @@ const Home = () => {
                 </p>
               </div>
               <Slider {...settings}>
-                {courses.map((course) => (
-                  <div key={course._id} className="p-4">
-                    <div className="flex justify-center">
-                      <div className="relative bg-white/40 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg w-80 transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
+  {courses.map((course) => (
+    <div key={course._id} className="p-4">
+      <div className="flex justify-center">
+        <div className="relative bg-white/40 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg w-80 h-[480px] flex flex-col transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
 
-                        {/* Image */}
-                        <img
-                          className="h-48 w-full object-cover rounded-t-2xl border-b border-purple-200"
-                          src={course.image?.url || "/placeholder.jpg"}
-                          alt={course.title || "Course Image"}
-                        />
+          {/* Image */}
+          <img
+            className="h-48 w-full object-cover rounded-t-2xl border-b border-purple-200"
+            src={course.image?.url || "/placeholder.jpg"}
+            alt={course.title || "Course Image"}
+          />
 
-                        {/* Content */}
-                        <div className="p-5 text-center space-y-3">
-                          <h2 className="text-xl font-bold text-purple-800 leading-snug">{course.title}</h2>
-                          <p className="text-sm text-gray-700 line-clamp-3">{course.description}</p>
-                          <div className="text-yellow-600 font-bold text-lg">₹{course.price}</div>
+          {/* Content */}
+          <div className="p-5 text-center flex flex-col justify-between flex-1">
+            <div className="space-y-3">
+              <h2 className="text-xl font-bold text-purple-800 leading-snug">{course.title}</h2>
+              <p className="text-sm text-gray-700 overflow-hidden text-ellipsis line-clamp-3 h-[60px]">
+                {course.description}
+              </p>
+              <div className="text-yellow-600 font-bold text-lg">₹{course.price}</div>
+            </div>
 
-                          <button className="mt-2 bg-yellow-300 text-purple-900 font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
-                            Enroll Now
-                          </button>
-                        </div>
+            <button className="mt-4 bg-yellow-300 text-purple-900 font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
+              Enroll Now
+            </button>
+          </div>
 
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </Slider>
+        </div>
+      </div>
+    </div>
+  ))}
+</Slider>
+
             </div>
           </div>
 

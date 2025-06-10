@@ -1,129 +1,139 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-function UpdateCourse({ existingCourse }) {
-  const [title, setTitle] = useState(existingCourse.title);
-  const [description, setDescription] = useState(existingCourse.description);
-  const [price, setPrice] = useState(existingCourse.price);
-  const [image, setImage] = useState(null);
-  const [preview, setPreview] = useState(existingCourse.image.url);
-  const [publicId, setPublicId] = useState(existingCourse.image.public_id);
+const UpdateCourse = () => {
+    const { id } = useParams();
+    const [course, setCourse] = useState(null);
+    const [form, setForm] = useState({
+        title: '',
+        description: '',
+        price: '',
+        image: { url: '', public_id: '' }
+    });
+    const navigate = useNavigate();
 
-  const handleImageChange = async (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+    const token = localStorage.getItem("creatorToken");
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    useEffect(() => {
+        const fetchCourse = async () => {
+            try {
+                const res = await axios.get("http://localhost:3000/api/admin/course/bulk", {
+                    headers: { token }
+                });
 
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("upload_preset", "coursestack"); // Replace with your Cloudinary preset
+                const courseToEdit = res.data.courses.find(c => c._id === id);
+                if (!courseToEdit) return toast.error("Course not found");
 
-      const res = await axios.post(
-        "https://api.cloudinary.com/v1_1/dr3hxaxsd/image/upload",
-        formData
-      );
+                setCourse(courseToEdit);
+                setForm({
+                    title: courseToEdit.title,
+                    description: courseToEdit.description,
+                    price: courseToEdit.price,
+                    image: courseToEdit.image || { url: '', public_id: '' }
+                });
+            } catch (err) {
+                toast.error("Failed to load course");
+            }
+        };
 
-      setPublicId(res.data.public_id);
-      setPreview(res.data.secure_url);
-    } catch (err) {
-      toast.error("Image upload failed!");
-    }
-  };
+        fetchCourse();
+    }, [id]);
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      title,
-      description,
-      price,
-      courseId: existingCourse._id,
-      image: {
-        public_id: publicId,
-        url: preview,
-      },
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setForm(prev => ({ ...prev, [name]: value }));
     };
 
-    try {
-      const token = localStorage.getItem("token");
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.put("http://localhost:3000/api/admin/course", {
+                ...form,
+                courseId: id
+            }, {
+                headers: { token }
+            });
 
-      const res = await axios.put("http://localhost:3000/api/admin/course", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+            toast.success("Course updated successfully");
+            navigate("/creator-dashboard");
+        } catch (err) {
+            toast.error("Update failed");
+            console.error(err);
+        }
+    };
 
-      toast.success(res.data.message || "Course updated successfully!");
-    } catch (err) {
-      toast.error("Failed to update course");
-    }
-  };
+    if (!course) return <p className="text-center mt-10 text-purple-700 text-lg">Loading course details...</p>;
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white via-violet-100 to-yellow-50 text-white p-4">
-      <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md text-gray-800">
-        <h2 className="text-2xl font-bold mb-6 text-center">Update Course</h2>
+    return (
+        <div className="max-w-2xl mx-auto px-6 py-8 mt-0 bg-gradient-to-br from-white via-gray-100 to-purple-50 shadow-lg rounded-2xl">
+            <h2 className="text-3xl font-bold mb-8 text-center text-purple-700">Update Course</h2>
+            <form onSubmit={handleUpdate} className="flex flex-col gap-5">
+                <input
+                    type="text"
+                    name="title"
+                    value={form.title}
+                    onChange={handleChange}
+                    placeholder="Course Title"
+                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 text-gray-700 placeholder-gray-400"
+                    required
+                />
+                <textarea
+                    name="description"
+                    value={form.description}
+                    onChange={handleChange}
+                    placeholder="Course Description"
+                    rows="5"
+                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 text-gray-700 placeholder-gray-400"
+                    required
+                ></textarea>
+                <input
+                    type="number"
+                    name="price"
+                    value={form.price}
+                    onChange={handleChange}
+                    placeholder="Price (INR)"
+                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 text-gray-700 placeholder-gray-400"
+                    required
+                />
+                <input
+                    type="text"
+                    name="imageUrl"
+                    value={form.image?.url}
+                    onChange={(e) =>
+                        setForm(prev => ({
+                            ...prev,
+                            image: { ...prev.image, url: e.target.value }
+                        }))
+                    }
+                    placeholder="Image URL"
+                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 text-gray-700 placeholder-gray-400"
+                />
 
-        <form onSubmit={handleUpdate}>
-          <label className="block mb-2 font-semibold">Title</label>
-          <input
-            type="text"
-            className="w-full p-2 mb-4 rounded bg-violet-50 border border-violet-200"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
+                {/* <input
+                    type="text"
+                    name="publicId"
+                    value={form.image?.public_id}
+                    onChange={(e) =>
+                        setForm(prev => ({
+                            ...prev,
+                            image: { ...prev.image, public_id: e.target.value }
+                        }))
+                    }
+                    placeholder="Image Public ID"
+                    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700 text-gray-700 placeholder-gray-400"
+                /> */}
 
-          <label className="block mb-2 font-semibold">Description</label>
-          <textarea
-            className="w-full p-2 mb-4 rounded bg-violet-50 border border-violet-200"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-
-          <label className="block mb-2 font-semibold">Price</label>
-          <input
-            type="number"
-            className="w-full p-2 mb-4 rounded bg-violet-50 border border-violet-200"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            required
-          />
-
-          <label className="block mb-2 font-semibold">Image</label>
-          <input
-            type="file"
-            accept="image/*"
-            className="w-full p-2 mb-4 rounded bg-yellow-50 border border-yellow-200"
-            onChange={handleImageChange}
-          />
-
-          {preview && (
-            <div className="mb-4">
-              <img src={preview} alt="Preview" className="w-full h-48 object-cover rounded-lg shadow" />
-            </div>
-          )}
-
-          <button
-            type="submit"
-            className="w-full bg-yellow-600 text-white font-semibold py-2 rounded hover:bg-yellow-700 transition"
-          >
-            Update Course
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
+                <button
+                    type="submit"
+                    className="bg-purple-700 hover:bg-purple-800 text-white font-semibold py-3 rounded-lg transition duration-300 ease-in-out"
+                >
+                    Update Course
+                </button>
+            </form>
+        </div>
+    );
+};
 
 export default UpdateCourse;

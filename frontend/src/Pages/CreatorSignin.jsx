@@ -28,16 +28,13 @@ function CreatorSignin() {
       const token = response.data.token;
 
       if (token) {
-        localStorage.setItem("creatorToken", token); // Save admin JWT token
-        console.log("JWT Token stored for creator:", token);
-
+        localStorage.setItem("creatorToken", token);
         toast.success("Creator signed in successfully");
-        navigate("/creator-dashboard"); // Redirect to creator dashboard
+        navigate("/creator-dashboard");
       } else {
         toast.error("Token not received. Please try again.");
       }
     } catch (error) {
-      console.error("Creator signin error:", error);
       const message = error.response?.data?.message || "Something went wrong. Try again later.";
       toast.error(message);
       setErrorMessage(message);
@@ -45,8 +42,8 @@ function CreatorSignin() {
   };
 
   return (
-    <div className='bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white'>
-      <div className='min-h-screen container mx-auto'>
+    <div className='bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen flex flex-col'>
+      <div className='container mx-auto flex-1'>
 
         {/* Header */}
         <header className='flex justify-between items-center p-6'>
@@ -57,26 +54,15 @@ function CreatorSignin() {
               <span className="text-2xl text-yellow-400 font-bold">Stack</span>
             </h1>
           </div>
-
-          <div className="flex gap-4">
-            <Link
-              to={"/creator/signup"}
-              className="bg-transparent text-white font-bold py-2 px-4 border border-white rounded hover:bg-white hover:text-purple-700 transition duration-200"
-            >
-              Creator Sign Up
-            </Link>
-          </div>
         </header>
 
         {/* Signin Card */}
-        <div className="flex justify-center items-center mt-20">
-          <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-8 rounded-2xl shadow-2xl w-[500px] border-2 border-white">
-            <h2 className="text-3xl font-bold mb-4 text-center text-white">
-              Creator Sign In
-              <h5 className='text-base font-normal text-center text-white'>
-                Access your dashboard and manage courses.
-              </h5>
-            </h2>
+        <div className="flex justify-center items-center px-4 mt-10">
+          <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-8 rounded-2xl shadow-2xl w-full max-w-md border-2 border-white">
+            <h2 className="text-3xl font-bold mb-2 text-center text-white">Creator Sign In</h2>
+            <h5 className='text-base font-normal mb-6 text-center text-white'>
+              Access your dashboard and manage courses.
+            </h5>
 
             <form onSubmit={handleSubmit}>
               {/* Email */}
@@ -94,7 +80,7 @@ function CreatorSignin() {
               </div>
 
               {/* Password */}
-              <div className="mb-6">
+              <div className="mb-4">
                 <label htmlFor="password" className="block text-gray-300 mb-1">Password</label>
                 <input
                   type="password"
@@ -122,9 +108,16 @@ function CreatorSignin() {
                 Sign In
               </button>
             </form>
+
+            {/* Sign up link */}
+            <p className="mt-6 text-center text-white">
+              Don&apos;t have an account?{" "}
+              <Link to="/creator/signup" className="underline text-yellow-200 hover:text-white">
+                Sign up here
+              </Link>
+            </p>
           </div>
         </div>
-
       </div>
     </div>
   );

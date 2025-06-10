@@ -49,26 +49,19 @@ function CreatorSignup() {
             <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full" />
             <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
           </div>
-          <div className="flex gap-4">
-            <Link
-              to={"/creator/signin"}
-              className="bg-transparent text-white font-bold py-2 px-4 border border-white rounded hover:bg-white hover:text-purple-700 transition duration-200"
-            >
-              Signin
-            </Link>
-          </div>
+
         </header>
 
         {/* Signup Card */}
-        <div className="flex justify-center items-center mt-10">
+        <div className="flex justify-center items-center mt-6">
           <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-8 rounded-2xl shadow-2xl w-[500px] border-2 border-white">
             <h2 className="text-3xl font-bold mb-2 text-center text-white">
-              Welcome <span className="text-white">Creator</span>
+              Welcome <span className="text-white"></span>
             </h2>
             <p className="mb-2 text-base font-normal text-center text-white">Join CourseStack as a Creator</p>
 
             <form onSubmit={handleSubmit}>
-              {/* First + Last Name */}
+
               <div className="flex gap-4 mb-4">
                 <div className="w-1/2">
                   <label htmlFor="firstname" className="block text-gray-300 mb-1">First Name</label>
@@ -95,7 +88,7 @@ function CreatorSignup() {
                 </div>
               </div>
 
-              {/* Email */}
+
               <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-300 mb-1">Email</label>
                 <input
@@ -108,7 +101,7 @@ function CreatorSignup() {
                 />
               </div>
 
-              {/* Password */}
+
               <div className="mb-6">
                 <label htmlFor="password" className="block text-gray-300 mb-1">Password</label>
                 <input
@@ -134,9 +127,16 @@ function CreatorSignup() {
                 Sign Up
               </button>
             </form>
+
+
+            <p className="mt-4 text-center text-white">
+              Already signed up?{' '}
+              <Link to="/creator/signin" className="text-yellow-200 font-semibold underline hover:text-white">
+                Sign in here
+              </Link>
+            </p>
           </div>
         </div>
-
       </div>
     </div>
   );

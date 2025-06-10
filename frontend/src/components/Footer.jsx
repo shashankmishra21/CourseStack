@@ -10,8 +10,8 @@ const Footer = () => {
         {/* Logo and Socials */}
         <div className="flex flex-col items-center md:items-center">
           <div className="flex items-center gap-3 mb-4">
-            <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full shadow-md" />
-            <h1 className="text-2xl font-bold">
+            <img src='/logo_cs.png' alt='CourseStack Logo' className="w-8 h-8 rounded-full shadow-md" />
+            <h1 className=" text-xl sm:text-2xl font-bold">
               <span className='text-white'>Course</span>
               <span className='text-yellow-400'>Stack</span>
             </h1>
@@ -46,7 +46,7 @@ const Footer = () => {
       </div>
 
       <div className="text-center text-sm text-white/70 pb-6 px-4">
-        © {new Date().getFullYear()} <span className='font-medium text-white'>CourseStack</span>. All rights reserved. Developed with ❤️ by <span className='text-yellow-400 font-semibold'>Shashank</span>
+        © {new Date().getFullYear()} <span className='font-medium text-white'>Course</span><span className='text-yellow-400 font-semibold'>Stack</span>. All rights reserved. Developed by <span className='text-yellow-400 font-semibold'>Shashank</span>
       </div>
     </footer>
   );

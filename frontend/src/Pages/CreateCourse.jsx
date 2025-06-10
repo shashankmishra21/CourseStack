@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
+
 
 function CreateCourse() {
   const [title, setTitle] = useState("");
@@ -9,6 +12,8 @@ function CreateCourse() {
   const [price, setPrice] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState("");
+
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -40,15 +45,21 @@ function CreateCourse() {
     try {
       const token = localStorage.getItem("creatorToken");
 
-      const res = await axios.post("http://localhost:3000/api/admin/course", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/admin/course",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            token: token
+          }
+        }
+      );
+
 
       toast.success(res.data.message || "Course created successfully!");
+      console.log(res.data.message || "Course created successfully!");
+      navigate('/creator-dashboard');
       setTitle("");
       setDescription("");
       setPrice("");
@@ -56,7 +67,7 @@ function CreateCourse() {
       setPreview("");
     } catch (err) {
       console.error("Error creating course:", err);
-      console.error("🔥 SERVER ERROR:", err);
+      console.error(" SERVER ERROR:", err);
 
       toast.error(err?.response?.data?.message || "Failed to create course.");
     }
@@ -109,12 +120,8 @@ function CreateCourse() {
             </div>
           )}
 
-          <button
-            type="submit"
-            className="w-full bg-violet-600 text-white font-semibold py-2 rounded hover:bg-violet-700 transition"
-          >
-            Create Course
-          </button>
+          <button type="submit"
+            className="w-full bg-violet-600 text-white font-semibold py-2 rounded hover:bg-violet-700 transition">Create Course</button>
         </form>
       </div>
     </div>

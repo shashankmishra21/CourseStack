@@ -13,7 +13,7 @@ export const PurchaseCourse = async (courseId) => {
       { courseId },
       {
         headers: {
-          Authorization: `Bearer ${token}`,  // send JWT here
+          Authorization: `Bearer ${token}`, 
         },
       }
     );

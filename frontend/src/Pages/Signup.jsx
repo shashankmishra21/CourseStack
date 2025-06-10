@@ -4,9 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
 function Signup() {
-
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -33,21 +31,17 @@ function Signup() {
       });
 
       console.log("Signup successful:", response.data);
-      toast.success(response.data.message);  // ✅ Show success alert
-      navigate("/Signin");           // ✅ Redirect to signin page
+      toast.success(response.data.message);
+      navigate("/Signin");
     } catch (error) {
       if (error.response) {
-        console.error("Signup error:", error.response.data); // ✅ Log for debugging
-        toast.error(error.response.data.error || "Signup failed");  // ✅ Alert failure message
-        // setErrorMessage(error.response.data.error);
+        console.error("Signup error:", error.response.data);
+        toast.error(error.response.data.error || "Signup failed");
       }
     }
   };
 
-
   return (
-
-
     <div className='bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 text-white'>
       <div className='min-h-screen container mx-auto'>
 
@@ -57,31 +51,20 @@ function Signup() {
             <img src='/logo_cs.png' alt='CourseStack Logo' className="w-10 h-10 rounded-full" />
             <h1><span className="text-2xl text-white font-bold">Course</span><span className="text-2xl text-yellow-300 font-bold">Stack</span></h1>
           </div>
-
-          <div className="flex gap-4">
-            <Link
-              to={"/Signin"}
-              className="bg-transparent text-white font-bold py-2 px-4 border border-white rounded hover:bg-white hover:text-purple-700 transition duration-200"
-            >
-              Signin
-            </Link>
-
-          </div>
         </header>
 
         {/* Signup Card */}
-        <div className="flex justify-center items-center mt-10">
-          <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-8 rounded-2xl shadow-2xl w-[500px] border-2 border-white">
+        <div className="flex justify-center items-center mt-6 px-4">
+          <div className="bg-gradient-to-br from-purple-800 via-purple-600 to-yellow-400 p-8 rounded-2xl shadow-2xl w-full max-w-lg border-2 border-white">
             <h2 className="text-3xl font-bold mb-2 text-center text-white">
               Welcome to <span className="text-white">Course</span><span className="text-yellow-300">Stack</span>
             </h2>
             <p className="mb-2 text-base font-normal text-center text-white">Just Signup To Join Us!</p>
 
-
             <form onSubmit={handleSubmit}>
-              {/* First + Last Name in one row */}
-              <div className="flex gap-4 mb-4">
-                <div className="w-1/2">
+            
+              <div className="flex flex-col md:flex-row gap-4 mb-4">
+                <div className="w-full md:w-1/2">
                   <label htmlFor="firstname" className="block text-gray-300 mb-1">First Name</label>
                   <input
                     type="text"
@@ -93,7 +76,7 @@ function Signup() {
                   />
                 </div>
 
-                <div className="w-1/2">
+                <div className="w-full md:w-1/2">
                   <label htmlFor="lastname" className="block text-gray-300 mb-1">Last Name</label>
                   <input
                     type="text"
@@ -134,7 +117,7 @@ function Signup() {
               </div>
 
               {errorMessage && (
-                <div className="mb-4 font-semibold text-2xl text-red-700 text-center text-">
+                <div className="mb-4 font-semibold text-2xl text-red-700 text-center">
                   {errorMessage}
                 </div>
               )}
@@ -147,9 +130,15 @@ function Signup() {
               </button>
             </form>
 
+            <div className="mt-4 text-center text-white">
+              Already signed up?{" "}
+              <Link to="/Signin" className="text-yellow-300 hover:underline">
+                Sign in here
+              </Link>
+            </div>
+
           </div>
         </div>
-
       </div>
     </div>
   );
