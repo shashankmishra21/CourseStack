@@ -26,10 +26,24 @@ app.use(fileUpload({
 // }));
 
 
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://course-stack-seven.vercel.app"
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 
 // Manually set CORS headers for preflight requests
 app.use((req, res, next) => {
