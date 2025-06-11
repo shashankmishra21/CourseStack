@@ -11,6 +11,7 @@ import SuccessStories from "../components/successStories";
 import Dashboard from "./Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ContactUs from "../components/ContactUs";
 
 const Home = () => {
 
@@ -204,6 +205,10 @@ const handleGoToDashboard = () => {
         <section>
           <SuccessStories />
         </section>
+
+        <scction>
+          <ContactUs/>
+        </scction>
 
         {/* footer */}
 
