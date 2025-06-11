@@ -45,15 +45,6 @@ app.use(
 );
 
 
-// Manually set CORS headers for preflight requests
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, token");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    next();
-});
-
-
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/course", courseRouter);
