@@ -7,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import WhyChooseCourseStack from "../components/WhyChooseCourseStack";
-import SuccessStories from "../components/successStories";
+import SuccessStories from "../components/SuccessStories";
 import Dashboard from "./Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
