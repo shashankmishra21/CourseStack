@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from '../utils/util';
 
 function Signin() {
   const [email, setEmail] = useState("");
@@ -11,13 +12,14 @@ function Signin() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/signin",
+        `${BACKEND_URL}/user/signin`,
         { email, password },
         {
           withCredentials: true,

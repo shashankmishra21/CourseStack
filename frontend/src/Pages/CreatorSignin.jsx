@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from '../utils/util';
 
 function CreatorSignin() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ function CreatorSignin() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/admin/signin",
+        `${BACKEND_URL}/admin/signin`,
         { email, password },
         {
           withCredentials: true,

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { BACKEND_URL } from '../utils/util';
 
 const UpdateCourse = () => {
     const { id } = useParams();
@@ -19,7 +20,7 @@ const UpdateCourse = () => {
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/api/admin/course/bulk", {
+                const res = await axios.get(`${BACKEND_URL}/admin/course/bulk`, {
                     headers: { token }
                 });
 
@@ -49,7 +50,7 @@ const UpdateCourse = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            await axios.put("http://localhost:3000/api/admin/course", {
+            await axios.put(`${BACKEND_URL}/admin/course`, {
                 ...form,
                 courseId: id
             }, {

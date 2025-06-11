@@ -12,6 +12,7 @@ import Dashboard from "./Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContactUs from "../components/ContactUs";
+import { BACKEND_URL } from "../utils/util";
 
 const Home = () => {
 
@@ -39,7 +40,7 @@ const handleGoToDashboard = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/course/preview",
+        const response = await axios.get(`${BACKEND_URL}/course/preview`,
           {
             withCredentials: true,
           }

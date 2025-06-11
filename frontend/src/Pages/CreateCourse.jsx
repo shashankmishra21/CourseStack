@@ -3,8 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
-
+import { BACKEND_URL } from "../utils/util";
 
 function CreateCourse() {
   const [title, setTitle] = useState("");
@@ -46,7 +45,7 @@ function CreateCourse() {
       const token = localStorage.getItem("creatorToken");
 
       const res = await axios.post(
-        "http://localhost:3000/api/admin/course",
+        `${BACKEND_URL}/admin/course`,
         formData,
         {
           headers: {

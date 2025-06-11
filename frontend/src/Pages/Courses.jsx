@@ -4,6 +4,7 @@ import PurchaseCourse from './PurchaseCourse';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../utils/util';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -14,7 +15,7 @@ const Courses = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/course/preview");
+        const res = await axios.get(`${BACKEND_URL}/course/preview`);
         setCourses(res.data.courses);
       } catch (error) {
         console.error('Error fetching courses:', error);

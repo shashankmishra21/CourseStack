@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navbar from "../components/Navbar";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { BACKEND_URL } from '../utils/util';
 
 const Dashboard = () => {
     const [courses, setCourses] = useState([]);
@@ -19,7 +20,7 @@ const Dashboard = () => {
             }
 
             try {
-                const res = await axios.get('http://localhost:3000/api/user/purchases', {
+                const res = await axios.get(`${BACKEND_URL}/user/purchases`, {
                     headers: {
                         token: token,
                     },

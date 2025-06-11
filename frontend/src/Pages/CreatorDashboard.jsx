@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { HiMenu, HiX } from 'react-icons/hi';
+import { BACKEND_URL } from '../utils/util';
 
 const CreatorDashboard = () => {
     const [courses, setCourses] = useState([]);
@@ -21,7 +22,7 @@ const CreatorDashboard = () => {
             }
 
             try {
-                const res = await axios.get("http://localhost:3000/api/admin/course/bulk", {
+                const res = await axios.get(`${BACKEND_URL}/admin/course/bulk`, {
                     headers: {
                         token: token,
                     },

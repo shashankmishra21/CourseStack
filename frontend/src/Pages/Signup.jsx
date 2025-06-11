@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { BACKEND_URL } from '../utils/util';
 
 function Signup() {
 
@@ -18,7 +19,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/api/user/signup", {
+      const response = await axios.post(`${BACKEND_URL}/user/signup`, {
         firstName,
         lastName,
         email,
