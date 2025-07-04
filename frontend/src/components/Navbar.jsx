@@ -106,11 +106,16 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu Icon */}
-        <div className="sm:hidden bg-transparent fill-gray-700">
+        <div className="sm:hidden bg-transparent">
           <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+            {isMobileMenuOpen ? (
+              <FiX size={24} color="purple" />
+            ) : (
+              <FiMenu size={24} color="purple" />
+            )}
           </button>
         </div>
+
       </div>
 
       {/* Mobile Menu Dropdown */}
