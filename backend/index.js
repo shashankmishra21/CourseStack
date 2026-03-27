@@ -18,12 +18,12 @@ app.use(fileUpload({
     tempFileDir: '/tmp/'
 }));
 
-// app.use(cors({
-//   origin: 'http://localhost:5173', // your frontend origin
-//   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-//   allowedHeaders: ['Content-Type', 'Authorization' , 'token'],  // allow Authorization header here
-//   credentials: true,
-// }));
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://coursestack-elearning.vercel.app'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+  credentials: true,
+}));
 
 
 const allowedOrigins = [
