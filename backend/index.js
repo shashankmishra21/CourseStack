@@ -18,18 +18,29 @@ app.use(fileUpload({
     tempFileDir: '/tmp/'
 }));
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://coursestack-elearning.vercel.app',
+  'https://course-stack-seven.vercel.app'
+];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://coursestack-elearning.vercel.app'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'token'],
+  origin: function (origin, callback) {
+    console.log("Incoming Origin:", origin); // DEBUG
+
+    if (!origin) return callback(null, true); // Postman / mobile apps
+
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app') // allow all Vercel previews
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
 }));
-
-
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://course-stack-seven.vercel.app"
-];
 
 app.use(
   cors({
