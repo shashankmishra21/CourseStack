@@ -1,11 +1,10 @@
-import axios from 'axios';
-import { BACKEND_URL } from '../utils/util';
+import axios from "axios";
+import { BACKEND_URL } from "../utils/util";
 
 export const PurchaseCourse = async (courseId) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   if (!token) {
-    alert('Please log in to enroll.');
-    return;
+    throw new Error("Please log in to enroll.");
   }
 
   try {
@@ -14,16 +13,14 @@ export const PurchaseCourse = async (courseId) => {
       { courseId },
       {
         headers: {
-          Authorization: `Bearer ${token}`, 
-        },
+          token: token
+        }
       }
     );
 
-    // alert(response.data.message || 'Enrolled successfully!');
     return response.data;
   } catch (error) {
-    console.error('Purchase failed:', error);
-    alert(error.response?.data?.message || 'Failed to enroll.');
+    throw new Error(error.response?.data?.message || "Failed to enroll.");
   }
 };
 

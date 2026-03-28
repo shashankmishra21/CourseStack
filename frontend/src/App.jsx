@@ -15,21 +15,24 @@ import CreatorSignin from './Pages/CreatorSignin';
 import CreateCourse from './Pages/CreateCourse';
 import UpdateCourse from './Pages/UpdateCourse';
 import CreatorDashboard from './Pages/CreatorDashboard';
-
+import CourseDetail from './Pages/CourseDetail';
 
 function App() {
 
   return (
     <div>
       <Routes>
-        {/* learner */}
         <Route path="/" element={<Home />} />
+
+        {/* learner */}
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/preview-course" element={<Courses />} />
         <Route path="/buy-course" element={<PurchaseCourse />} />
         {/* <Route path="/purchases" element={<Purchases />} /> */}
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/course/:courseId" element={<CourseDetail />} />
+
         {/* creator */}
         <Route path="/creator/signin" element={<CreatorSignin />} />
         <Route path="/creator/signup" element={<CreatorSignup />} />

@@ -56,7 +56,7 @@ courseRouter.post("/purchase", userMiddleware, async function (req, res) {
 
 courseRouter.get("/preview", async function (req, res) {
   try {
-    const courses = await courseModel.find({ isPublished: true });
+    const courses = await courseModel.find({});
 
     return res.json({
       courses

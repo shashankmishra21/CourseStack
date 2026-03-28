@@ -16,10 +16,10 @@ const Courses = () => {
     const fetchCourses = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/course/preview`);
-        setCourses(res.data.courses);
+        setCourses(res.data.courses || []);
       } catch (error) {
         console.error('Error fetching courses:', error);
-        toast.error("Failed to load courses.");
+        toast.error('Failed to load courses.');
       } finally {
         setLoading(false);
       }
@@ -35,10 +35,10 @@ const Courses = () => {
       if (result && result.message) {
         toast.success(result.message);
       } else {
-        toast.error("Purchase failed. Please try again.");
+        toast.error('Purchase failed. Please try again.');
       }
     } catch (error) {
-      toast.error("An error occurred. Please try again.");
+      toast.error(error.message || 'An error occurred. Please try again.');
     } finally {
       setPurchasingCourseId(null);
     }
@@ -56,22 +56,20 @@ const Courses = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 px-4 py-6 md:py-4">
-      {/* <Navbar /> */}
       <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto mb-10 gap-4 px-4">
         <h3 className="text-3xl font-bold text-gray-700 text-center md:text-left">
           Courses We Offer
         </h3>
+
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
           <button
             onClick={() => navigate('/')}
-            className="bg-yellow-400 text-purple-800 font-semibold py-2 px-5 rounded-md hover:bg-yellow-300 transition w-full sm:w-auto">
+            className="bg-yellow-400 text-purple-800 font-semibold py-2 px-5 rounded-md hover:bg-yellow-300 transition w-full sm:w-auto"
+          >
             Home
           </button>
-
         </div>
       </div>
-
-      
 
       {courses.length === 0 ? (
         <p className="text-center text-gray-600 text-lg">No courses available.</p>
@@ -80,37 +78,44 @@ const Courses = () => {
           {courses.map((course) => (
             <div
               key={course._id}
-              className="bg-white/90 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg hover:shadow-2xl transition-all hover:scale-[1.02] duration-300 ease-in-out">
-              {/* Image */}
+              className="bg-white/90 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg hover:shadow-2xl transition-all hover:scale-[1.02] duration-300 ease-in-out"
+            >
               <img
-                src={course.image?.url || "/placeholder.jpg"}
+                src={course.image?.url || '/placeholder.jpg'}
                 alt={course.title}
                 className="w-full h-48 object-cover rounded-t-2xl border-b border-purple-100"
               />
 
-
-
-
-
-
-              {/* Content */}
               <div className="p-5 md:p-6 text-gray-800">
                 <h3 className="text-xl md:text-2xl font-semibold mb-2 text-purple-800">
                   {course.title}
                 </h3>
-                <p className="text-gray-600 text-sm md:text-base line-clamp-3">
+
+                <p className="text-gray-600 text-sm md:text-base line-clamp-3 min-h-[72px]">
                   {course.description}
                 </p>
-                <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                   <span className="text-yellow-600 font-bold text-lg">
                     ₹{course.price}
                   </span>
-                  <button
-                    onClick={() => handleEnroll(course._id)}
-                    className="bg-yellow-300 text-yellow-900 font-medium py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow disabled:opacity-60"
-                    disabled={purchasingCourseId === course._id}>
-                    {purchasingCourseId === course._id ? "Enrolling..." : "Enroll"}
-                  </button>
+
+                  <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                    <button
+                      onClick={() => navigate(`/course/${course._id}`)}
+                      className="bg-white border border-purple-300 text-purple-800 font-medium py-2 px-4 rounded-full hover:bg-purple-50 transition duration-300 shadow-sm w-full sm:w-auto"
+                    >
+                      View Details
+                    </button>
+
+                    <button
+                      onClick={() => handleEnroll(course._id)}
+                      className="bg-yellow-300 text-yellow-900 font-medium py-2 px-5 rounded-full hover:bg-yellow-400 transition duration-300 shadow disabled:opacity-60 w-full sm:w-auto"
+                      disabled={purchasingCourseId === course._id}
+                    >
+                      {purchasingCourseId === course._id ? 'Enrolling...' : 'Enroll'}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

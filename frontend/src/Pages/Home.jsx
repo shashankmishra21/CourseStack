@@ -19,18 +19,18 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-const handleGoToDashboard = () => {
-  const learnerToken = localStorage.getItem('token');
-  const creatorToken = localStorage.getItem('creatorToken');
+  const handleGoToDashboard = () => {
+    const learnerToken = localStorage.getItem('token');
+    const creatorToken = localStorage.getItem('creatorToken');
 
-  if (learnerToken) {
-    navigate('/Dashboard');
-  } else if (creatorToken) {
-    navigate('/creator-dashboard');
-  } else {
-    toast.warning("Please sign in first to access your Dashboard!");
-  }
-};
+    if (learnerToken) {
+      navigate('/Dashboard');
+    } else if (creatorToken) {
+      navigate('/creator-dashboard');
+    } else {
+      toast.warning("Please sign in first to access your Dashboard!");
+    }
+  };
 
 
 
@@ -157,38 +157,38 @@ const handleGoToDashboard = () => {
                 </p>
               </div>
               <Slider {...settings}>
-  {courses.map((course) => (
-    <div key={course._id} className="p-4">
-      <div className="flex justify-center">
-        <div className="relative bg-white/40 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg w-80 h-[480px] flex flex-col transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
+                {courses.map((course) => (
+                  <div key={course._id} className="p-4">
+                    <div className="flex justify-center">
+                      <div className="relative bg-white/40 backdrop-blur-md rounded-2xl border border-purple-100 shadow-lg w-80 h-[480px] flex flex-col transition-transform transform hover:scale-105 hover:shadow-xl duration-300 ease-in-out">
 
-          {/* Image */}
-          <img
-            className="h-48 w-full object-cover rounded-t-2xl border-b border-purple-200"
-            src={course.image?.url || "/placeholder.jpg"}
-            alt={course.title || "Course Image"}
-          />
+                        {/* Image */}
+                        <img
+                          className="h-48 w-full object-cover rounded-t-2xl border-b border-purple-200"
+                          src={course.image?.url || "/placeholder.jpg"}
+                          alt={course.title || "Course Image"}
+                        />
 
-          {/* Content */}
-          <div className="p-5 text-center flex flex-col justify-between flex-1">
-            <div className="space-y-3">
-              <h2 className="text-xl font-bold text-purple-800 leading-snug">{course.title}</h2>
-              <p className="text-sm text-gray-700 overflow-hidden text-ellipsis line-clamp-3 h-[60px]">
-                {course.description}
-              </p>
-              <div className="text-yellow-600 font-bold text-lg">₹{course.price}</div>
-            </div>
+                        {/* Content */}
+                        <div className="p-5 text-center flex flex-col justify-between flex-1">
+                          <div className="space-y-3">
+                            <h2 className="text-xl font-bold text-purple-800 leading-snug">{course.title}</h2>
+                            <p className="text-sm text-gray-700 overflow-hidden text-ellipsis line-clamp-3 h-[60px]">
+                              {course.description}
+                            </p>
+                            <div className="text-yellow-600 font-bold text-lg">₹{course.price}</div>
+                          </div>
 
-            <button className="mt-4 bg-yellow-300 text-purple-900 font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
-              Enroll Now
-            </button>
-          </div>
+                          <button className="mt-4 bg-yellow-300 text-purple-900 font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition duration-300 shadow-md">
+                            Enroll Now
+                          </button>
+                        </div>
 
-        </div>
-      </div>
-    </div>
-  ))}
-</Slider>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Slider>
 
             </div>
           </div>
@@ -208,9 +208,9 @@ const handleGoToDashboard = () => {
           <SuccessStories />
         </section>
 
-        <scction>
-          <ContactUs/>
-        </scction>
+        <section>
+          <ContactUs />
+        </section>
 
         {/* footer */}
 
