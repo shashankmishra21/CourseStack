@@ -26,6 +26,4 @@ function userMiddleware(req, res, next) {
   }
 }
 
-module.exports = {
-    userMiddleware: userMiddleware
-}
+module.exports = { userMiddleware: userMiddleware }

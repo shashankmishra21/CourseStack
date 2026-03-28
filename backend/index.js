@@ -9,6 +9,7 @@ const courseRouter = require("./routes/course");
 const cloudinary = require('cloudinary').v2;
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
+const contentRouter = require("./routes/courseContentRoutes");
 
 
 app.use(express.json());
@@ -59,8 +60,7 @@ app.use(
 app.use("/api/user", userRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/course", courseRouter);
-
-
+app.use("/api/content", contentRouter)
 
 cloudinary.config({
     cloud_name: process.env.cloud_name,

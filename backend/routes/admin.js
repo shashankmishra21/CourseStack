@@ -4,9 +4,8 @@ const { adminModel } = require('../db');
 const { courseModel } = require('../db');
 const jwt = require("jsonwebtoken");
 const { JWT_ADMIN_PASSWORD } = require('../config');
-const adminMiddleware = require("../middleware/admin");
+const { adminMiddleware } = require("../middleware/admin");
 const cloudinary = require('cloudinary').v2;
-
 
 
 adminRouter.post("/signup", async function (req, res) {
