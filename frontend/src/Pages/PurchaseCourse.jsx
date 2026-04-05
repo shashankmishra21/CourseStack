@@ -2,9 +2,14 @@ import axios from "axios";
 import { BACKEND_URL } from "../utils/util";
 
 export const PurchaseCourse = async (courseId) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token")?.trim();
+
   if (!token) {
     throw new Error("Please log in to enroll.");
+  }
+
+  if (!courseId) {
+    throw new Error("Course ID is required.");
   }
 
   try {
@@ -13,14 +18,19 @@ export const PurchaseCourse = async (courseId) => {
       { courseId },
       {
         headers: {
-          token: token
-        }
+          token,
+        },
       }
     );
 
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || "Failed to enroll.");
+    const message =
+      error?.response?.data?.message ||
+      error?.message ||
+      "Failed to enroll.";
+
+    throw new Error(message);
   }
 };
 

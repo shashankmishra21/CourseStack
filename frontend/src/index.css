@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+  font-family: "Arimo", sans-serif;
+}
+
 .flip-card {
   perspective: 1000px;
 }
